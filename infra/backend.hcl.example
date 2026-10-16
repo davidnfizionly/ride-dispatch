@@ -1,0 +1,7 @@
+# Copy to infra/backend.hcl (gitignored) and set the bucket from
+# `terraform -chdir=infra/backend output -raw state_bucket`.
+# Each stack runs: terraform init -backend-config=../backend.hcl
+bucket       = "ride-dispatch-tfstate-xxxxxxxx"
+region       = "us-east-1"
+encrypt      = true
+use_lockfile = true

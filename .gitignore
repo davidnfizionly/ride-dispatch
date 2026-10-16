@@ -1,0 +1,39 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+tfplan
+crash.log
+backend.hcl
+
+# Secrets and environment
+.env
+.env.*
+!.env.example
+kubeconfig
+*.kubeconfig
+*.pem
+*.key
+
+# Build outputs
+node_modules/
+dist/
+build/
+*.zip
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Map data (downloaded and generated, too large for git)
+*.osm.pbf
+*.osrm*
+local/data/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
