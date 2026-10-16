@@ -1,0 +1,17 @@
+date_utc: 2026-10-16T23:25:39Z
+environment: local Docker Desktop (WSL2, 4 CPUs): Redis 7.2 container and OSRM v6.0.0 container on the same Docker network; not ElastiCache
+drivers indexed: 20, search radius 6000 m, Redis db 1
+
+redis_geosearch_ms
+  measures: one GEOSEARCH round trip from this client (radius 6 km, 10 results)
+  n=2000 p50=0.414 ms p95=1.133 ms p99=2.438 ms max=19.062 ms mean=0.577 ms
+nearest_available_ms
+  measures: GEOSEARCH plus one pipelined freshness and claim check (2 round trips)
+  n=2000 p50=0.983 ms p95=2.876 ms p99=7.240 ms max=21.007 ms mean=1.357 ms
+match_lookup_ms
+  measures: nearest_available plus the atomic SET NX claim of the chosen driver
+  n=500 p50=2.208 ms p95=6.970 ms p99=12.605 ms max=23.432 ms mean=2.877 ms
+match_total_ms
+  measures: full match_ride: zone supply and demand reads, lookup, claim, 2 OSRM routes, pricing
+  n=500 p50=9.734 ms p95=26.081 ms p99=38.230 ms max=57.186 ms mean=12.221 ms
+match outcomes: {'MATCHED': 500}

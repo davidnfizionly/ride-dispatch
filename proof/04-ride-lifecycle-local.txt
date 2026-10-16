@@ -1,0 +1,10 @@
+date_utc: 2026-10-16T23:27:43Z
+request: client=C3 pickup={'lat': -1.2864, 'lng': 36.8172} dropoff={'lat': -1.2676, 'lng': 36.8108}
+   0.019s  ack status=200 ride_id=7886403a-94d7-4c00-825e-3bf521bb4eb9
+   0.020s  RideRequested  
+   0.020s  RideSearching  
+   0.070s  RideMatched    driver_id=D05 eta_s=325 zone=877a6e42cffffff zone_available=3 zone_recent_requests=0 surge=1.0 price_kes=250 trip_distance_m=3377 lookup_ms=13.832 total_ms=56.441
+   0.902s  DriverEnRoute  driver_id=D05 driver_name=Amanda sim_eta_s=108
+ 108.913s  DriverArrived  driver_id=D05 driver_name=Amanda
+ 110.936s  TripStarted    driver_id=D05 driver_name=Amanda
+ 190.952s  TripCompleted  driver_id=D05 driver_name=Amanda zone=877a6e42cffffff surge=1.0 price_kes=250 trip_distance_m=3377

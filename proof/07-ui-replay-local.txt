@@ -1,0 +1,4 @@
+   2.3s  replay: map shows 20 drivers
+   8.2s  replay: active ride drawn
+   8.6s  replay: C1 status Driver found
+   8.6s  PASS

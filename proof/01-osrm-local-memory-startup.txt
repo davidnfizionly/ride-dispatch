@@ -1,0 +1,10 @@
+date_utc: 2026-10-16T22:59:32Z
+image: ghcr.io/project-osrm/osrm-backend:v6.0.0
+graph files size: 130M
+host: Docker Desktop, 4 CPUs, 8263380992 bytes memory
+startup_to_first_route_s: 0.87
+memory_idle: 88.79MiB / 7.696GiB
+burst_500_routes_total_s: 8.28 (sequential curl, includes curl process start)
+memory_after_burst: 107.7MiB / 7.696GiB
+sample_route CBD to Westlands:
+  distance_m: 3377  duration_s: 239

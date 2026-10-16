@@ -1,0 +1,16 @@
+date_utc: 2026-10-16T23:35:58Z
+zone: 877a6e42dffffff (H3 resolution 7), pickup at zone centre {'lat': -1.284617, 'lng': 36.805345}
+23:36:00  before  zone=877a6e42dffffff available=5 recent_requests=0 surge=1.0
+23:36:01  before  zone=877a6e42dffffff available=4 recent_requests=0 surge=1.0
+23:36:02  before  zone=877a6e42dffffff available=3 recent_requests=0 surge=1.0
+23:36:09  before  zone=877a6e42dffffff available=2 recent_requests=0 surge=1.0
+23:36:12  ride A  RideMatched driver=D11 zone_available=2 recent_requests=0 surge=1.0 price_kes=320 trip_distance_m=4758
+23:36:12  control {'action': 'offline_zone', 'zone': '877a6e42dffffff', 'seconds': 240}
+23:36:13  after   zone=877a6e42dffffff available=0 recent_requests=1 surge=1.5
+23:36:13  ride B  RideMatched driver=D13 zone_available=0 recent_requests=1 surge=1.5 price_kes=480 trip_distance_m=4758
+23:36:14  later   zone=877a6e42dffffff available=0 recent_requests=2 surge=1.75
+23:36:15  later   zone=877a6e42dffffff available=1 recent_requests=2 surge=1.5
+23:36:32  later   zone=877a6e42dffffff available=2 recent_requests=2 surge=1.25
+23:36:37  later   zone=877a6e42dffffff available=3 recent_requests=2 surge=1.0
+23:36:37  control {'action': 'online_all'}
+result: surge 1.0 to 1.5, price_kes 320 to 480 for the same trip

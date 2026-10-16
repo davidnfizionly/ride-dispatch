@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #0b1220;
+  color: #f8fafc;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #1e293b;
+}
+
+.leaflet-control-attribution {
+  font-size: 13px;
+}
+
+.zone-label {
+  background: #b91c1c;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: none;
+}
