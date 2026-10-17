@@ -36,5 +36,9 @@ step partition docker run --rm -v "$DATA_DIR:/data" "$OSRM_IMAGE" \
 step customize docker run --rm -v "$DATA_DIR:/data" "$OSRM_IMAGE" \
   osrm-customize /data/nairobi.osrm
 
+# The containers write as root with owner-only modes; make the graph readable
+# so the image build context can include it.
+docker run --rm -v "$DATA_DIR:/data" "$OSRM_IMAGE" sh -c 'chmod 644 /data/nairobi.osrm.*'
+
 ls -l "$DATA_DIR"/nairobi.osm.pbf
 du -ch "$DATA_DIR"/nairobi.osrm* | tail -1

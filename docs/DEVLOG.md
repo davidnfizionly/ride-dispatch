@@ -56,8 +56,8 @@ Real problems, in the order they occurred: what happened, root cause, fix.
 - Root cause: `pkill -f` matches full command lines, including the one that contained the pattern.
 - Fix: dev servers are stopped by PID taken from the listening port.
 
-## OSRM pod crashed on EKS: permission denied on the graph files
+## OSRM pod crashed on EKS: graph file missing from the image
 
-- What happened: the first OSRM pod on EKS restarted in a loop with `File "/data/nairobi.osrm.fileIndex" mapping failed: ... Permission denied`.
-- Root cause: the graph files were written by the root user of the preprocessing containers with owner-only permissions, and the image runs as an unprivileged user (65534). Locally the files were mounted into a container running as root, so the problem did not show.
-- Fix: the Dockerfile copies the graph with `COPY --chmod=0444`; a new image tag was built and deployed.
+- What happened: the OSRM pod on EKS restarted in a loop. The first error was `Permission denied` on the graph files; after a permissions change it became `File "/data/nairobi.osrm.fileIndex" mapping failed: ... Invalid argument`.
+- Root cause, found in three steps: (1) the image runs as an unprivileged user (65534) and the files were owner-only; (2) the first fix, `COPY --chmod=0444`, also removed the execute bit from the `/data` directory, so it could not be traversed; (3) the real cause of the mapping error: `nairobi.osrm.fileIndex` on the build host was owned by root with mode 700 (written by the preprocessing container), the build user could not read it, and the image build context included it as an empty file without any error. An empty file cannot be memory-mapped. The local stack never saw this because it mounted the files into a container running as root.
+- Fix: the graph files are made world-readable at the end of `services/osrm/prepare.sh`, the Dockerfile uses `COPY --chmod=0755`, and the image was verified locally (route answered while running as uid 65534) before a new tag was pushed. The arm64 check under qemu was not usable for this: OSRM's memory mapping also fails under emulation, so the check ran on an amd64 build of the same Dockerfile.
