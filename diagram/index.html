@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Real-Time Ride Dispatch - Architecture</title>
+<style>
+  :root { --ink: #232F3E; --region: #00A4A6; --vpc: #8C4FFF; --az: #147EBA; --public: #7AA116; --private: #00A4A6; --grey: #7D8998; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; font-family: "Amazon Ember", "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+  #canvas { position: relative; width: 1800px; height: 1000px; background: #fff; overflow: hidden; }
+  .box { position: absolute; border: 2px solid; }
+  .box > .title { position: absolute; top: 6px; left: 10px; font-size: 19px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .box > .title img { width: 32px; height: 32px; }
+  .cloud { border-color: var(--ink); }
+  .cloud > .title { top: 0; left: 0; background: var(--ink); color: #fff; padding: 0 12px 0 0; height: 36px; }
+  .cloud > .title img { width: 36px; height: 36px; }
+  .region { border: 2px dashed var(--region); }
+  .region > .title { color: #00777A; }
+  .vpc { border-color: var(--vpc); }
+  .vpc > .title { color: #7D3FD8; }
+  .az { border: 2px dashed var(--az); }
+  .az > .title { color: var(--az); left: auto; right: 12px; }
+  .public { border-color: var(--public); }
+  .public > .title { color: #5B7A10; }
+  .private { border-color: var(--private); }
+  .private > .title { color: #00777A; }
+  .eks { border-color: var(--grey); }
+  .node { position: absolute; width: 190px; margin-left: -95px; text-align: center; }
+  .node img { width: 64px; height: 64px; display: block; margin: 0 auto; }
+  .node span { display: block; margin-top: 6px; font-size: 20px; line-height: 1.15; white-space: nowrap; }
+  .step { position: absolute; width: 30px; height: 30px; border-radius: 50%; background: #000; color: #fff; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  svg { position: absolute; inset: 0; pointer-events: none; }
+  svg polyline { fill: none; stroke: #000; stroke-width: 1.6; }
+</style>
+</head>
+<body>
+<div id="canvas">
+
+  <!-- Containers -->
+  <div class="box cloud" style="left:230px; top:15px; width:1550px; height:965px;"><div class="title"><img src="icons/group-aws-cloud.svg" alt="">AWS Cloud</div></div>
+  <div class="box region" style="left:250px; top:58px; width:1510px; height:907px;"><div class="title"><img src="icons/group-region.svg" alt="">us-east-1</div></div>
+  <div class="box vpc" style="left:275px; top:430px; width:1460px; height:515px;"><div class="title"><img src="icons/group-vpc.svg" alt="">VPC</div></div>
+  <div class="box az" style="left:295px; top:478px; width:1420px; height:452px;"><div class="title">Availability Zones us-east-1a and us-east-1b</div></div>
+  <div class="box public" style="left:320px; top:525px; width:235px; height:385px;"><div class="title"><img src="icons/group-public-subnet.svg" alt="">Public subnets</div></div>
+  <div class="box private" style="left:580px; top:525px; width:1115px; height:385px;"><div class="title"><img src="icons/group-private-subnet.svg" alt="">Private subnets</div></div>
+  <div class="box eks" style="left:600px; top:568px; width:200px; height:325px;"><div class="title"><img src="icons/eks.svg" alt="">EKS</div></div>
+
+  <!-- Nodes: top = center y - 32 -->
+  <div class="node" style="left:110px; top:448px;"><img src="icons/client.svg" alt=""><span>React UI</span></div>
+
+  <div class="node" style="left:360px; top:143px;"><img src="icons/api-gateway.svg" alt=""><span>WebSocket API</span></div>
+  <div class="node" style="left:570px; top:143px;"><img src="icons/lambda.svg" alt=""><span>WebSocket handlers</span></div>
+  <div class="node" style="left:810px; top:143px;"><img src="icons/dynamodb.svg" alt=""><span>Rides, connections</span></div>
+  <div class="node" style="left:1030px; top:143px;"><img src="icons/lambda.svg" alt=""><span>Lifecycle, notifier</span></div>
+
+  <div class="node" style="left:570px; top:313px;"><img src="icons/eventbridge.svg" alt=""><span>Event bus</span></div>
+  <div class="node" style="left:1260px; top:313px;"><img src="icons/lambda.svg" alt=""><span>Archiver</span></div>
+  <div class="node" style="left:1460px; top:313px;"><img src="icons/s3.svg" alt=""><span>Archive bucket</span></div>
+  <div class="node" style="left:1650px; top:313px;"><img src="icons/athena.svg" alt=""><span>Athena</span></div>
+
+  <div class="node" style="left:437px; top:668px;"><img src="icons/nat-gateway.svg" alt=""><span>NAT gateway</span></div>
+  <div class="node" style="left:700px; top:608px;"><img src="icons/eks.svg" alt=""><span>Simulator pod</span></div>
+  <div class="node" style="left:700px; top:778px;"><img src="icons/eks.svg" alt=""><span>OSRM pod</span></div>
+  <div class="node" style="left:930px; top:608px;"><img src="icons/msk.svg" alt=""><span>MSK</span></div>
+  <div class="node" style="left:1170px; top:608px;"><img src="icons/lambda.svg" alt=""><span>Matching</span></div>
+  <div class="node" style="left:1400px; top:608px;"><img src="icons/elasticache.svg" alt=""><span>ElastiCache Redis</span></div>
+
+  <!-- Steps -->
+  <div class="step" style="left:292px; top:125px;">1</div>
+  <div class="step" style="left:502px; top:125px;">2</div>
+  <div class="step" style="left:628px; top:612px;">3</div>
+  <div class="step" style="left:862px; top:590px;">4</div>
+  <div class="step" style="left:1102px; top:590px;">5</div>
+  <div class="step" style="left:502px; top:295px;">6</div>
+  <div class="step" style="left:962px; top:125px;">7</div>
+  <div class="step" style="left:1192px; top:295px;">8</div>
+  <div class="step" style="left:1582px; top:295px;">9</div>
+
+  <svg width="1800" height="1000" viewBox="0 0 1800 1000">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+      </marker>
+    </defs>
+    <!-- 1 browser and WebSocket API, then the request handler -->
+    <polyline points="146,480 200,480 200,175 324,175" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <polyline points="396,175 534,175" marker-end="url(#arrow)"/>
+    <!-- 2 handler stores the ride and publishes RideRequested -->
+    <polyline points="606,175 774,175" marker-end="url(#arrow)"/>
+    <polyline points="570,238 570,309" marker-end="url(#arrow)"/>
+    <!-- 6 event bus trunk: lifecycle and notifier, matching, archiver -->
+    <polyline points="606,345 1224,345" marker-end="url(#arrow)"/>
+    <polyline points="1030,345 1030,240" marker-end="url(#arrow)"/>
+    <polyline points="1170,345 1170,604" marker-end="url(#arrow)"/>
+    <!-- 7 lifecycle updates the rides table; notifier pushes through the API -->
+    <polyline points="994,175 846,175" marker-end="url(#arrow)"/>
+    <polyline points="1030,141 1030,110 360,110 360,139" marker-end="url(#arrow)"/>
+    <!-- 3 simulator: positions to MSK, assignments back; routes from OSRM; lifecycle events to the bus -->
+    <polyline points="736,640 894,640" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <polyline points="700,708 700,774" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <polyline points="732,625 788,625 788,465 570,465 570,410" marker-end="url(#arrow)"/>
+    <!-- 4 two consumer groups: matching and archiver -->
+    <polyline points="966,640 1134,640" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <polyline points="930,604 930,455 1260,455 1260,410" marker-end="url(#arrow)"/>
+    <!-- 5 matching: Redis index and search, OSRM route -->
+    <polyline points="1206,640 1364,640" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <polyline points="1170,708 1170,810 736,810" marker-end="url(#arrow)"/>
+    <!-- 8 archiver writes to S3; 9 Athena reads it -->
+    <polyline points="1296,345 1424,345" marker-end="url(#arrow)"/>
+    <polyline points="1496,345 1614,345" marker-end="url(#arrow)"/>
+  </svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Cleanup verification after destroying app, cluster, data and network (resource IDs masked)
+date_utc: 2026-10-17T02:37:19Z
+terraform destroy results: app 65 destroyed, cluster 20 destroyed, data 16 destroyed, network 24 destroyed; state list empty for all four stacks
+
+service listings in us-east-1 (count of remaining project resources):
+eks clusters: 0
+ec2 instances (pending, running, stopping, stopped): 0
+load balancers (v2 and classic): 0
+nat gateways (pending, available, deleting): 0
+elastic IPs: 0
+msk clusters: 0
+elasticache replication groups: 0
+vpc endpoints: 0
+vpcs tagged Project=ride-dispatch: 0
+network interfaces with ride-dispatch in the description: 0
+cloudwatch log groups /aws/lambda/ride-dispatch*, /aws/apigateway/ride-dispatch*, /aws/eks/ride-dispatch*: 0
+customer-managed kms keys: none were created by this project
+ecr repositories ride-dispatch/*: 0
+lambda functions ride-dispatch*: 0
+dynamodb tables ride-dispatch*: 0
+api gateway apis ride-dispatch: 0
+event buses ride-dispatch*: 0
+glue database ride_dispatch: 0
+athena workgroup ride-dispatch: 0
+iam roles ride-dispatch*: 0
+s3 buckets ride-dispatch*: 1 (the Terraform state bucket, kept on purpose)
+
+resourcegroupstaggingapi, tag Project=ride-dispatch: still listed the state bucket and the budget (kept on purpose),
+plus 1 NAT gateway, 2 VPC endpoints and 9 security group rules already deleted. Checked one by one:
+nat gateway state: deleted
+vpc endpoints: InvalidVpcEndpointId.NotFound
+security group rule: InvalidSecurityGroupRuleId.NotFound
+(the tagging API keeps recently deleted resources listed for a while)
