@@ -1,0 +1,10 @@
+date_utc: 2026-10-16T23:48:24Z
+check: each Lambda zip imported inside public.ecr.aws/lambda/python:3.13-arm64 (qemu emulation on the build host)
+matching.zip 1824405 bytes
+lifecycle.zip 7045 bytes
+archiver.zip 3896 bytes
+machine: aarch64
+Python 3.13.16
+matching: import OK, h3 4.5.0
+lifecycle: import OK
+archiver: import OK

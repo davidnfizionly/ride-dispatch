@@ -1,0 +1,40 @@
+# Driver simulator. ${SIM_IMAGE} is substituted at deploy time; endpoints come
+# from the sim-config ConfigMap created by scripts/deploy_k8s.sh.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simulator
+  namespace: ride-dispatch
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulator
+  namespace: ride-dispatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: simulator }
+  template:
+    metadata:
+      labels: { app: simulator }
+    spec:
+      serviceAccountName: simulator
+      containers:
+        - name: simulator
+          image: ${SIM_IMAGE}
+          envFrom:
+            - configMapRef: { name: sim-config }
+            # WebSocket URL and token for the demo scripts run with kubectl exec.
+            - secretRef: { name: ws-client, optional: true }
+          env:
+            - { name: OSRM_URL, value: "http://osrm:5000" }
+            - { name: EVENT_SINK, value: eventbridge }
+            - { name: FLEET_SIZE, value: "20" }
+            - { name: SPEED_FACTOR, value: "3" }
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { memory: 384Mi }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false

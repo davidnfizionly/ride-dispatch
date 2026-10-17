@@ -33,7 +33,7 @@ services:
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
-        for t in driver-positions:2 ride-assignments:1 sim-control:1 local-lifecycle-events:1; do
+        for t in driver-positions:1 ride-assignments:1 sim-control:1 local-lifecycle-events:1; do
           /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists \
             --topic "$${t%%:*}" --partitions "$${t##*:}" --replication-factor 1
         done

@@ -1,0 +1,49 @@
+# OSRM routing service. ${OSRM_IMAGE} is substituted at deploy time.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ride-dispatch
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: osrm
+  namespace: ride-dispatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: osrm }
+  template:
+    metadata:
+      labels: { app: osrm }
+    spec:
+      containers:
+        - name: osrm
+          image: ${OSRM_IMAGE}
+          ports:
+            - containerPort: 5000
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { memory: 512Mi }
+          readinessProbe:
+            httpGet:
+              path: /route/v1/driving/36.8172,-1.2864;36.8108,-1.2676?overview=false
+              port: 5000
+            periodSeconds: 5
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+---
+# NodePort so the VPC-attached matching functions can reach OSRM without a load balancer.
+apiVersion: v1
+kind: Service
+metadata:
+  name: osrm
+  namespace: ride-dispatch
+spec:
+  type: NodePort
+  selector: { app: osrm }
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30500

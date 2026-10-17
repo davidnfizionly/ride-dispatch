@@ -1,0 +1,7 @@
+*
+!services/simulator/requirements.txt
+!services/shared/shared
+!services/matching/matching
+!services/simulator/simulator
+!scripts/*.py
+**/__pycache__
