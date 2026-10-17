@@ -55,3 +55,9 @@ Real problems, in the order they occurred: what happened, root cause, fix.
 - What happened: `pkill -f "vite --port 5173"` also terminated the shell running it, so the commands after it did not run.
 - Root cause: `pkill -f` matches full command lines, including the one that contained the pattern.
 - Fix: dev servers are stopped by PID taken from the listening port.
+
+## OSRM pod crashed on EKS: permission denied on the graph files
+
+- What happened: the first OSRM pod on EKS restarted in a loop with `File "/data/nairobi.osrm.fileIndex" mapping failed: ... Permission denied`.
+- Root cause: the graph files were written by the root user of the preprocessing containers with owner-only permissions, and the image runs as an unprivileged user (65534). Locally the files were mounted into a container running as root, so the problem did not show.
+- Fix: the Dockerfile copies the graph with `COPY --chmod=0444`; a new image tag was built and deployed.
