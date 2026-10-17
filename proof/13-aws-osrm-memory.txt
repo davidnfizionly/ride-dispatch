@@ -1,0 +1,6 @@
+date_utc: 2026-10-17T01:23:25Z
+measures: cgroup memory of the OSRM container on EKS (memory.current, includes page cache of the mapped graph) and its RSS from /proc
+cgroup memory.current bytes: 100704256
+VmHWM:	  104320 kB
+VmRSS:	  104320 kB
+node: t4g.medium arm64

@@ -1,0 +1,14 @@
+window_utc: 2026-10-17T01:05:00Z to 2026-10-17T01:31:45Z
+measures: CloudWatch AWS/Lambda metrics per function (arm64, python3.13); duration in ms
+function             invocations  errors throttles    avg_ms    p50_ms    p99_ms
+matching-positions        1094.0     0.0       0.0     136.2     128.4     213.9
+matching-requests            4.0     0.0       0.0    2045.0     218.1    7668.6
+archiver-positions          97.0     0.0       0.0     204.8     177.2    3000.3
+archiver-trips               4.0     0.0       0.0     608.7     129.1    2026.3
+lifecycle-update            24.0     0.0       0.0     396.2      19.8    3002.5
+notifier                  1124.0     0.0       0.0      34.9      20.1      78.4
+ws-connect                   4.0     1.0       0.0    1844.1     117.4    4993.1
+ws-disconnect                3.0     0.0       0.0    1113.4     135.4    3188.1
+ws-request                   4.0     0.0       0.0     890.7     251.6    3034.2
+account max ConcurrentExecutions (1-minute periods): 6.0
+account concurrency limit: 1000

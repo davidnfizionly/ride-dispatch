@@ -17,7 +17,7 @@ await page.goto(base);
 
 try {
   if (mode === 'live') {
-    await page.getByTestId('conn').getByText('connected').waitFor({ timeout: 15000 });
+    await page.getByTestId('conn').getByText('connected', { exact: true }).waitFor({ timeout: 15000 });
     log('connected to WebSocket');
     await shot(page, '01-client-panel');
     await page.getByTestId('card-C2').click();

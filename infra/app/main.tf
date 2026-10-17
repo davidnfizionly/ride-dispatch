@@ -129,11 +129,11 @@ locals {
     }
     archiver-trips = {
       package = "archiver", handler = "archiver.handlers.trip_completed_handler"
-      vpc     = false, timeout = 10, memory = 128
+      vpc     = false, timeout = 10, memory = 256
     }
     lifecycle-update = {
       package = "lifecycle", handler = "lifecycle.handlers.lifecycle_handler"
-      vpc     = false, timeout = 10, memory = 128
+      vpc     = false, timeout = 10, memory = 256
     }
     notifier = {
       package = "lifecycle", handler = "lifecycle.handlers.notify_handler"
@@ -141,15 +141,15 @@ locals {
     }
     ws-connect = {
       package = "lifecycle", handler = "lifecycle.handlers.ws_connect_handler"
-      vpc     = false, timeout = 5, memory = 128
+      vpc     = false, timeout = 10, memory = 256
     }
     ws-disconnect = {
       package = "lifecycle", handler = "lifecycle.handlers.ws_disconnect_handler"
-      vpc     = false, timeout = 5, memory = 128
+      vpc     = false, timeout = 10, memory = 256
     }
     ws-request = {
       package = "lifecycle", handler = "lifecycle.handlers.ws_request_handler"
-      vpc     = false, timeout = 10, memory = 128
+      vpc     = false, timeout = 10, memory = 256
     }
   }
 

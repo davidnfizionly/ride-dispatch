@@ -1,0 +1,7 @@
+   1.4s  connected to WebSocket
+   1.7s  ride requested for C2 (Kilimani to Upper Hill)
+  14.2s  C2 status: Driver found
+  17.6s  map shows 20 drivers and the active ride
+  42.0s  C2 status: In trip
+ 180.5s  C2 status: Completed
+ 180.6s  PASS

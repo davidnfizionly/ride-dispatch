@@ -1,0 +1,22 @@
+date_utc: 2026-10-17T01:24:29Z
+query:
+  -- Which H3 zone had the highest demand, and at what time?
+  -- Runs on the SYNTHETIC ride history (seeded generator, not real rides).
+  SELECT
+    pickup_zone,
+    date_trunc('hour', CAST(requested_at AS timestamp)) AS hour_utc,
+    count(*) AS rides,
+    round(avg(surge), 2) AS avg_surge,
+    sum(price_kes) AS revenue_kes
+  FROM ride_dispatch.synthetic_ride_history
+  GROUP BY 1, 2
+  ORDER BY rides DESC, hour_utc
+  LIMIT 5
+engine_ms: 761  data_scanned_bytes: 288682
+result:
+  pickup_zone | hour_utc | rides | avg_surge | revenue_kes
+  877a6e428ffffff | 2026-10-09 15:00:00.000 | 18 | 1.75 | 10530
+  877a6e42cffffff | 2026-10-09 15:00:00.000 | 15 | 1.93 | 9350
+  877a6e42cffffff | 2026-10-14 14:00:00.000 | 15 | 1.68 | 9010
+  877a6e553ffffff | 2026-10-15 15:00:00.000 | 15 | 1.88 | 8300
+  877a6e55affffff | 2026-10-13 04:00:00.000 | 14 | 1.68 | 10380

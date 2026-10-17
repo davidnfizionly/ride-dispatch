@@ -69,9 +69,12 @@ export function useFeed() {
       const open = () => {
         const ws = new WebSocket(`${url}?token=${encodeURIComponent(import.meta.env.VITE_WS_TOKEN || '')}`);
         wsRef.current = ws;
-        ws.onopen = () => dispatch({ kind: 'status', status: 'connected' });
+        // Only the current socket may change state (React StrictMode opens and
+        // closes a first socket in development).
+        ws.onopen = () => wsRef.current === ws && dispatch({ kind: 'status', status: 'connected' });
         ws.onmessage = (e) => dispatch({ kind: 'msg', msg: JSON.parse(e.data) });
         ws.onclose = () => {
+          if (wsRef.current !== ws) return;
           dispatch({ kind: 'status', status: 'disconnected' });
           if (!closed) retry = setTimeout(open, 2000);
         };
@@ -80,7 +83,9 @@ export function useFeed() {
       return () => {
         closed = true;
         clearTimeout(retry);
-        wsRef.current?.close();
+        const ws = wsRef.current;
+        wsRef.current = null;
+        ws?.close();
       };
     }
     let timers = [];

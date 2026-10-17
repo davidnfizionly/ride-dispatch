@@ -36,8 +36,11 @@ kubectl -n "$NS" create configmap sim-config \
   --from-literal=REDIS_SSL=1 \
   --dry-run=client -o yaml | kubectl apply -f -
 
-# The WebSocket URL and token exist only after the app stack is applied.
-if WS_URL=$(out app ws_url 2> /dev/null) && WS_TOKEN=$(out app connect_token 2> /dev/null); then
+# The WebSocket URL and token exist only after the app stack is applied
+# (terraform output prints a warning, not an error, when there are none).
+if (cd "$ROOT/infra/app" && terraform output -json | jq -e 'has("ws_url")' > /dev/null); then
+  WS_URL=$(out app ws_url)
+  WS_TOKEN=$(out app connect_token)
   kubectl -n "$NS" create secret generic ws-client \
     --from-literal=WS_URL="$WS_URL" --from-literal=WS_TOKEN="$WS_TOKEN" \
     --dry-run=client -o yaml | kubectl apply -f -

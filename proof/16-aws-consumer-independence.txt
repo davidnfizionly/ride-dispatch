@@ -1,0 +1,47 @@
+date_utc: 2026-10-17T01:24:51Z
+plan: 60 s baseline, archiver ESM disabled for 180 s, then re-enabled and observed
+topic=driver-positions partitions=1 groups=matching,archiver
+01:24:57  end=23940  matching_lag=180  archiver_lag=180
+01:25:07  end=24140  matching_lag=160  archiver_lag=180
+01:25:17  end=24340  matching_lag=120  archiver_lag=180
+01:25:27  end=24540  matching_lag=100  archiver_lag=180
+01:25:37  end=24740  matching_lag=80  archiver_lag=180
+01:25:47  end=24940  matching_lag=60  archiver_lag=180
+01:25:51  disabling archiver event source mapping
+01:25:57  end=25140  matching_lag=40  archiver_lag=180
+01:26:07  end=25340  matching_lag=20  archiver_lag=180
+01:26:10  archiver mapping state: Disabled
+01:26:17  end=25540  matching_lag=220  archiver_lag=380
+01:26:27  end=25740  matching_lag=200  archiver_lag=180
+01:26:37  end=25940  matching_lag=180  archiver_lag=380
+01:26:47  end=26140  matching_lag=160  archiver_lag=580
+01:26:57  end=26340  matching_lag=140  archiver_lag=780
+01:27:07  end=26540  matching_lag=120  archiver_lag=980
+01:27:17  end=26740  matching_lag=100  archiver_lag=1180
+01:27:27  end=26940  matching_lag=80  archiver_lag=1380
+01:27:37  end=27140  matching_lag=280  archiver_lag=1580
+01:27:47  end=27340  matching_lag=180  archiver_lag=1780
+01:27:57  end=27540  matching_lag=160  archiver_lag=1980
+01:28:07  end=27740  matching_lag=140  archiver_lag=2180
+01:28:17  end=27940  matching_lag=120  archiver_lag=2380
+01:28:27  end=28140  matching_lag=100  archiver_lag=2580
+01:28:37  end=28340  matching_lag=80  archiver_lag=2780
+01:28:47  end=28540  matching_lag=60  archiver_lag=2980
+01:28:57  end=28740  matching_lag=40  archiver_lag=3180
+01:29:07  end=28940  matching_lag=20  archiver_lag=3380
+01:29:09  re-enabling archiver event source mapping
+01:29:17  end=29140  matching_lag=220  archiver_lag=3580
+01:29:27  end=29340  matching_lag=200  archiver_lag=3780
+01:29:37  end=29540  matching_lag=180  archiver_lag=3980
+01:29:47  end=29740  matching_lag=160  archiver_lag=4180
+01:29:50  archiver mapping state: Enabled
+01:29:57  end=29940  matching_lag=140  archiver_lag=380
+01:30:07  end=30160  matching_lag=160  archiver_lag=600
+01:30:17  end=30360  matching_lag=140  archiver_lag=340
+01:30:27  end=30560  matching_lag=120  archiver_lag=340
+01:30:37  end=30760  matching_lag=100  archiver_lag=340
+01:30:47  end=30960  matching_lag=80  archiver_lag=340
+01:30:57  end=31160  matching_lag=60  archiver_lag=140
+01:31:07  end=31360  matching_lag=40  archiver_lag=140
+01:31:17  end=31560  matching_lag=240  archiver_lag=120
+01:31:27  end=31760  matching_lag=200  archiver_lag=120

@@ -1,0 +1,11 @@
+# Second ride, functions warm. Command: kubectl -n ride-dispatch exec deploy/simulator -- python scripts/ride_trace.py C1
+date_utc: 2026-10-17T01:19:06Z
+request: client=C1 pickup={'lat': -1.2864, 'lng': 36.8172} dropoff={'lat': -1.2676, 'lng': 36.8108}
+   0.271s  ack status=200 ride_id=63ab4e82-2b36-488b-859c-cf1e519e6315
+   0.408s  RideRequested  
+   0.664s  RideSearching  
+   0.950s  RideMatched    driver_id=D15 eta_s=468 zone=877a6e42cffffff zone_available=2 zone_recent_requests=1 surge=1.0 price_kes=250 trip_distance_m=3377 lookup_ms=7.645 total_ms=42.465
+   1.647s  DriverEnRoute  driver_id=D15 driver_name=David sim_eta_s=155
+ 156.637s  DriverArrived  driver_id=D15 driver_name=David
+ 158.675s  TripStarted    driver_id=D15 driver_name=David
+ 238.765s  TripCompleted  driver_id=D15 driver_name=David zone=877a6e42cffffff surge=1.0 price_kes=250 trip_distance_m=3377

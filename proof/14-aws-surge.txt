@@ -1,0 +1,21 @@
+# Command: kubectl -n ride-dispatch exec deploy/simulator -- python scripts/surge_demo.py
+date_utc: 2026-10-17T01:23:41Z
+zone: 877a6e42dffffff (H3 resolution 7), pickup at zone centre {'lat': -1.284617, 'lng': 36.805345}
+01:23:42  before  zone=877a6e42dffffff available=6 recent_requests=0 surge=1.0
+01:23:43  before  zone=877a6e42dffffff available=5 recent_requests=0 surge=1.0
+01:23:47  before  zone=877a6e42dffffff available=6 recent_requests=0 surge=1.0
+01:23:48  before  zone=877a6e42dffffff available=7 recent_requests=0 surge=1.0
+01:23:49  before  zone=877a6e42dffffff available=6 recent_requests=0 surge=1.0
+01:23:54  ride A  RideMatched driver=D12 zone_available=6 recent_requests=0 surge=1.0 price_kes=320 trip_distance_m=4758
+01:23:54  control {'action': 'offline_zone', 'zone': '877a6e42dffffff', 'seconds': 240}
+01:23:56  after   zone=877a6e42dffffff available=0 recent_requests=1 surge=1.5
+01:23:57  ride B  RideMatched driver=D20 zone_available=0 recent_requests=1 surge=1.5 price_kes=480 trip_distance_m=4758
+01:23:57  later   zone=877a6e42dffffff available=0 recent_requests=2 surge=1.75
+01:24:07  later   zone=877a6e42dffffff available=1 recent_requests=2 surge=1.5
+01:24:09  later   zone=877a6e42dffffff available=0 recent_requests=2 surge=1.75
+01:24:17  later   zone=877a6e42dffffff available=1 recent_requests=2 surge=1.5
+01:24:19  later   zone=877a6e42dffffff available=2 recent_requests=2 surge=1.25
+01:24:20  later   zone=877a6e42dffffff available=1 recent_requests=2 surge=1.5
+01:24:21  later   zone=877a6e42dffffff available=2 recent_requests=2 surge=1.25
+01:24:21  control {'action': 'online_all'}
+result: surge 1.0 to 1.5, price_kes 320 to 480 for the same trip

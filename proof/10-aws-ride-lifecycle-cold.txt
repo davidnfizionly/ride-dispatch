@@ -1,0 +1,12 @@
+# First ride on the deployed stack (cold Lambda starts on every function in the path).
+# Command: kubectl -n ride-dispatch exec deploy/simulator -- python scripts/ride_trace.py C3
+date_utc: 2026-10-17T01:15:20Z
+request: client=C3 pickup={'lat': -1.2864, 'lng': 36.8172} dropoff={'lat': -1.2676, 'lng': 36.8108}
+   3.315s  ack status=200 ride_id=af989a6b-a619-4916-9da2-f3db38689d5b
+   3.483s  RideRequested  
+  10.980s  RideSearching  
+  11.647s  RideMatched    driver_id=D16 eta_s=335 zone=877a6e42cffffff zone_available=1 zone_recent_requests=0 surge=1.0 price_kes=250 trip_distance_m=3377 lookup_ms=12.582 total_ms=266.021
+  12.334s  DriverEnRoute  driver_id=D16 driver_name=Jeffrey sim_eta_s=111
+ 122.575s  DriverArrived  driver_id=D16 driver_name=Jeffrey
+ 124.315s  TripStarted    driver_id=D16 driver_name=Jeffrey
+ 204.371s  TripCompleted  driver_id=D16 driver_name=Jeffrey zone=877a6e42cffffff surge=1.0 price_kes=250 trip_distance_m=3377

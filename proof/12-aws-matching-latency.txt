@@ -1,0 +1,17 @@
+date_utc: 2026-10-17T01:23:16Z
+environment: EKS pod on t4g.medium (arm64) to ElastiCache Redis OSS 7.1 cache.t4g.micro over TLS in the same VPC, and to the OSRM pod through its ClusterIP service
+drivers indexed: 20, search radius 6000 m, Redis db 1
+
+redis_geosearch_ms
+  measures: one GEOSEARCH round trip from this client (radius 6 km, 10 results)
+  n=2000 p50=0.417 ms p95=0.542 ms p99=0.722 ms max=1.362 ms mean=0.436 ms
+nearest_available_ms
+  measures: GEOSEARCH plus one pipelined freshness and claim check (2 round trips)
+  n=2000 p50=0.963 ms p95=1.197 ms p99=1.602 ms max=4.273 ms mean=1.000 ms
+match_lookup_ms
+  measures: nearest_available plus the atomic SET NX claim of the chosen driver
+  n=500 p50=2.072 ms p95=2.685 ms p99=3.248 ms max=4.966 ms mean=2.181 ms
+match_total_ms
+  measures: full match_ride: zone supply and demand reads, lookup, claim, 2 OSRM routes, pricing
+  n=500 p50=7.666 ms p95=9.367 ms p99=11.808 ms max=19.286 ms mean=7.928 ms
+match outcomes: {'MATCHED': 500}
