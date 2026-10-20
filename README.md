@@ -79,25 +79,6 @@ H3 is used as described: an open-source hexagonal grid library created at Uber. 
 9. **One billable session.** Network, then data and cluster in parallel, then the application stack; OSRM and the simulator deployed to EKS; the four scenarios, the measurements and the consumer independence test run; console captures taken; everything destroyed.
 10. **Diagram and this README, offline.**
 
-Total build time: 4 h 06 min, of which 19 min was waiting for decisions and 38 min for console captures; about 2 h 02 min was the billable session. All times UTC, from the first preflight command to the final push, on 2026-10-16 and 2026-10-17.
-
-| Part | From | To | Duration |
-| --- | --- | --- | --- |
-| Preflight | 22:33 | 22:39 | 6 min |
-| Repository, hook, backend, budget | 22:39 | 22:45 | 6 min |
-| Waiting for the first push decision | 22:45 | 22:54 | 9 min |
-| Offline build (graph, logic, harness, UI, local proof) | 22:54 | 23:37 | 43 min |
-| Infrastructure code, packaging, cost estimate | 23:37 | 00:11 | 34 min |
-| Waiting for the billable session decision | 00:11 | 00:16 | 5 min |
-| Billable session: applies (MSK alone took 31 min) | 00:16 | 00:51 | 35 min |
-| Billable session: OSRM image fixes and deployment | 00:51 | 01:12 | 21 min |
-| Billable session: scenarios, measurements, UI test | 01:12 | 01:40 | 28 min |
-| Billable session: console captures and checks | 01:40 | 02:18 | 38 min |
-| Waiting for the destroy decision | 02:18 | 02:23 | 5 min |
-| Destroy and verification, with the diagram and README written in parallel | 02:23 | 02:37 | 14 min |
-| Final audit and push | 02:37 | 02:39 | 2 min |
-| **Total** | **22:33** | **02:39** | **4 h 06 min** |
-
 ## Real Problems Hit and Fixed
 
 Each one is written up with its root cause in [docs/DEVLOG.md](docs/DEVLOG.md).
